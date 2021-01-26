@@ -31,6 +31,8 @@ flutter pub get
 
 This project uses `inject` library that works with code generation, execute the following command to generate files:
 
+Note: If you are building for Flutter web, you have to switch Flutter channel to `stable` and run this step. After run `build_runner` successfully, then switch back to `beta` channel.
+
 ```
 flutter packages pub run build_runner build --delete-conflicting-outputs
 ```
@@ -39,6 +41,20 @@ or watch command in order to keep the source code synced automatically:
 
 ```
 flutter packages pub run build_runner watch
+```
+
+**For web:**
+
+To run web, need to enbale the web feature
+
+```
+flutter config --enable-web
+```
+
+And then run with
+
+```
+flutter run -d chrome
 ```
 
 ## Hide Generated Files
@@ -76,6 +92,7 @@ In Visual Studio Code, navigate to `Preferences` -> `Settings` and search for `F
 * Dark Theme Support (new)
 * Multilingual Support (new)
 * Provider example (new)
+* Web Support (new)
 
 ### Up-Coming Features:
 
