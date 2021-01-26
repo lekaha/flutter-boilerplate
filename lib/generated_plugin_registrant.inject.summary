@@ -1,0 +1,8 @@
+{
+  "asset": "asset:boilerplate/lib/generated_plugin_registrant.dart",
+  "summary": {
+    "injector": [],
+    "module": [],
+    "injectable": []
+  }
+}

@@ -7,7 +7,6 @@ import 'package:boilerplate/widgets/progress_indicator_widget.dart';
 import 'package:flushbar/flushbar_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:material_dialog/material_dialog.dart';
 import 'package:provider/provider.dart';
 
 import '../../routes.dart';
@@ -195,9 +194,7 @@ class _HomeScreenState extends State<HomeScreen> {
   _buildLanguageDialog() {
     _showDialog<String>(
       context: context,
-      child: MaterialDialog(
-        borderRadius: 5.0,
-        enableFullWidth: true,
+      child: AlertDialog(
         title: Text(
           AppLocalizations.of(context).translate('home_tv_choose_language'),
           style: TextStyle(
@@ -205,35 +202,40 @@ class _HomeScreenState extends State<HomeScreen> {
             fontSize: 16.0,
           ),
         ),
-        headerColor: Theme.of(context).primaryColor,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        closeButtonColor: Colors.white,
-        enableCloseButton: true,
-        enableBackButton: false,
-        onCloseButtonClicked: () {
-          Navigator.of(context).pop();
-        },
-        children: _languageStore.supportedLanguages
-            .map(
-              (object) => ListTile(
-                dense: true,
-                contentPadding: EdgeInsets.all(0.0),
-                title: Text(
-                  object.language,
-                  style: TextStyle(
-                    color: _languageStore.locale == object.locale
-                        ? Theme.of(context).primaryColor
-                        : _themeStore.darkMode ? Colors.white : Colors.black,
+        actions: <Widget>[
+          TextButton(
+            child: Text('Cancel'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+        content: SingleChildScrollView(
+          child: ListBody( 
+            children: _languageStore.supportedLanguages
+              .map(
+                (object) => ListTile(
+                  dense: true,
+                  contentPadding: EdgeInsets.all(0.0),
+                  title: Text(
+                    object.language,
+                    style: TextStyle(
+                      color: _languageStore.locale == object.locale
+                          ? Theme.of(context).primaryColor
+                          : _themeStore.darkMode ? Colors.white : Colors.black,
+                    ),
                   ),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    // change user language based on selected locale
+                    _languageStore.changeLanguage(object.locale);
+                  },
                 ),
-                onTap: () {
-                  Navigator.of(context).pop();
-                  // change user language based on selected locale
-                  _languageStore.changeLanguage(object.locale);
-                },
-              ),
-            )
-            .toList(),
+              )
+              .toList(),
+          )
+        )
       ),
     );
   }
